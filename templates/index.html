@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>hello Open Api</title>
+
+    <script src="https://vk.com/js/api/openapi.js?139" type="text/javascript"></script>
+    <script type="text/javascript">
+  			VK.init({
+    			apiId: 5902611
+ 			});
+	</script>
+</head>
+<body>
+<div align="center">
+    Hello. you need to be <a onclick="auth()" href="#">authorized</a>
+</div>
+
+<script type="text/javascript">
+		var id = 0;
+		function auth() {
+			VK.Auth.login(function(response) {
+				console.log(response)
+  			if (response.session) {
+		    		/* Пользователь успешно авторизовался */
+		    		location="http://0.0.0.0:8000/workingGroup";
+			} else {
+			    	/* Пользователь нажал кнопку Отмена в окне авторизации */
+			    	alert("You aren't authorized");
+			  }
+			}, VK.access.WALL, VK.access.GROUPS);
+		}
+		</script>
+</body>
+</html>

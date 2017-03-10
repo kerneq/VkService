@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://vk.com/js/api/openapi.js?139" type="text/javascript"></script>
+    <script type="text/javascript">
+  			VK.init({
+    			apiId: 5902611
+ 			});
+    </script>
+</head>
+<body>
+
+<div align="center">
+    <h1>Select photo to publish ;)</h1>
+    <#list list as photo>
+        <img src="${photo.url}" alt="hello" width="300" height="300" /><br />
+        <div><a href="#" onclick="testPost(${photo.ownerId}, ${photo.albumId}, ${photo.id})">send photo</a></div><br /><br /><br />
+    </#list>
+</div>
+
+<script>
+		function testPost(owner, al, id) {
+			VK.api("wall.post", {owner_id: owner, from_group: 1, "message": "from service ;)", attachments: "photo" +  owner + "_" + id}, function (data) {
+    			alert("Post ID:" + data.response.post_id);
+			});
+		}
+</script>
+
+</body>
+</html>
