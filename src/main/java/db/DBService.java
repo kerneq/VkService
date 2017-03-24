@@ -66,6 +66,7 @@ public class DBService {
 
     public static void main(String[] args) {
         DBService service = DBService.Instance();
-        System.out.println(service.getParsedGroups(3).size());
+        List<PostDataSet> list = service.getParsedGroups(3);
+        System.out.println(list.size());
     }
 }
