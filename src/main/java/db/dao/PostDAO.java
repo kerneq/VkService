@@ -39,9 +39,9 @@ public class PostDAO {
 
             while (ph.next()) {
                 PhotoDataSet photo = new PhotoDataSet();
-                photo.album_id = ph.getInt("album_id");
-                photo.media_id = ph.getInt("media_id");
-                photo.owner_id = ph.getInt("owner_id");
+                photo.album_id = ph.getInt("album_id") + "";
+                photo.media_id = ph.getInt("media_id") + "";
+                photo.owner_id = ph.getInt("owner_id") + "";
                 photo.url = ph.getString("url");
 
                 p.addPhoto(photo);

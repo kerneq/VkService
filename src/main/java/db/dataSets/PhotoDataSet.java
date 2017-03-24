@@ -4,20 +4,20 @@ package db.dataSets;
  * Created by iters on 3/24/17.
  */
 public class PhotoDataSet {
-    public int media_id, album_id, owner_id;
+    public String media_id, album_id, owner_id;
     public String url;
 
     public PhotoDataSet() {}
 
-    public int getMedia_id() {
+    public String getMedia_id() {
         return media_id;
     }
 
-    public int getAlbum_id() {
+    public String getAlbum_id() {
         return album_id;
     }
 
-    public int getOwner_id() {
+    public String getOwner_id() {
         return owner_id;
     }
 

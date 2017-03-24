@@ -15,15 +15,15 @@
 
 <div align="center">
     <h1>Select photo to publish ;)</h1>
-    <#list list as photo>
-        <img src="${photo.url}" alt="hello" width="300" height="300" /><br />
-        <div><a href="#" onclick="testPost(${photo.ownerId}, ${photo.albumId}, ${photo.id})">send photo</a></div><br /><br /><br />
+    <#list list as post>
+        <img src="${post.photos[0].url}" alt="hello" width="300" height="300" /><br />
+        <div><a href="#" onclick="testPost(${post.photos[0].owner_id}, ${post.photos[0].album_id}, ${post.photos[0].media_id})">send photo</a></div><br /><br /><br />
     </#list>
 </div>
 
 <script>
-		function testPost(owner, al, id) {
-			VK.api("wall.post", {owner_id: owner, from_group: 1, "message": "from service ;)", attachments: "photo" +  owner + "_" + id}, function (data) {
+		function testPost(owner, al, id, txt) {
+			VK.api("wall.post", {owner_id: -140860188, from_group: 1, "message": "hello", attachments: "photo" +  owner + "_" + id}, function (data) {
     			alert("Post ID:" + data.response.post_id);
 			});
 		}
