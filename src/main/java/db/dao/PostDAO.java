@@ -20,23 +20,22 @@ public class PostDAO {
     }
 
     public List<PostDataSet> getPostsByNiche(int nicheId) throws SQLException {
-        //TODO: check if nicheId exist
-
+        checkNicheExist(nicheId);
         List<PostDataSet> posts = new ArrayList<>();
         Statement stm = connection.createStatement();
 
-        String query = String.format("SELECT * FROM parse_from WHERE niche_id = %d;", nicheId);
+        String query = String.format("SELECT * FROM post_info WHERE niche_id = %d;", nicheId);
         stm.execute(query);
         ResultSet result = stm.getResultSet();
 
         while(result.next()) {
             int id = result.getInt("id");
             query = String.format("SELECT * FROM photo WHERE post_id = %d;", id);
-            stm.execute(query);
+            Statement stmPhoto = connection.createStatement();
+            stmPhoto.execute(query);
 
-            ResultSet ph = stm.getResultSet();
-            int size = ph.getFetchSize();
-            PostDataSet p = new PostDataSet(size);
+            ResultSet ph = stmPhoto.getResultSet();
+            PostDataSet p = new PostDataSet(getCountPostPhotos(id));
 
             while (ph.next()) {
                 PhotoDataSet photo = new PhotoDataSet();
@@ -55,11 +54,39 @@ public class PostDAO {
             posts.add(p);
 
             ph.close();
+            stmPhoto.close();
         }
 
         result.close();
         stm.close();
         return posts;
+    }
+
+    private int getCountPostPhotos(int postId) throws SQLException {
+        Statement stm = connection.createStatement();
+        String query = String.format("SELECT COUNT(*) as size FROM photo WHERE post_id = %d;", postId);
+        stm.execute(query);
+        ResultSet result = stm.getResultSet();
+
+        result.next();
+        int size = result.getInt("size");
+        result.close();
+        stm.close();
+        return size;
+    }
+
+    private void checkNicheExist(int nicheId) throws SQLException {
+        Statement stm = connection.createStatement();
+        String query = String.format("SELECT COUNT(*) as size FROM niche WHERE id = %d;", nicheId);
+        stm.execute(query);
+        ResultSet result = stm.getResultSet();
+
+        result.next();
+        if (result.getInt("size") < 1) {
+            throw new RuntimeException("niche doesn't exist");
+        }
+        result.close();
+        stm.close();
     }
 
 }

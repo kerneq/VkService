@@ -63,4 +63,9 @@ public class DBService {
 
         return null;
     }
+
+    public static void main(String[] args) {
+        DBService service = DBService.Instance();
+        System.out.println(service.getParsedGroups(3).size());
+    }
 }
